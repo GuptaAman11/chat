@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="b.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>AppStack</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#">Dashboards</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#">SaaS</a></li>
+                <li><a href="#">Social</a></li>
+                <li><a href="#">Crypto</a></li>
+                <li><a href="#">E-Commerce</a></li>
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Chat</a></li>
+                <li><a href="#">File Manager</a></li>
+                <li><a href="#">Calendar</a></li>
+                <li><a href="#">Email</a></li>
+                <li><a href="#">Tasks</a></li>
+            </ul>
+        </nav>
+        <div class="main-content" id="main-content">
+            <header>
+                <h2>Dashboard</h2>
+                <div class="filter-box">
+                    <button class="filter-button">Today</button>
+                    <button class="filter-button"><img src="https://img.icons8.com/ios/50/000000/filter.png" alt="Filter"></button>
+                </div>
+            </header>
+            <section class="content">
+                <div class="widgets">
+                    <div class="widget welcome">
+                        <h3>Welcome Back, Chris!</h3>
+                        <p>AppStack Dashboard</p>
+                        <img src="https://appstack.bootlab.io/img/illustrations/customer-support.png" alt="Illustration">
+                    </div>
+                    <div class="widget earnings">
+                        <h3>$24,300</h3>
+                        <p>Total Earnings</p>
+                        <p>+5.35% Since last week</p>
+                    </div>
+                    <div class="widget orders">
+                        <h3>43</h3>
+                        <p>Pending Orders</p>
+                        <p>-4.25% Since last week</p>
+                    </div>
+                    <div class="widget revenue">
+                        <h3>$18,700</h3>
+                        <p>Total Revenue</p>
+                        <p>+8.65% Since last week</p>
+                    </div>
+                </div>
+                <div class="charts">
+                    <h3>Sales / Revenue</h3>
+                    <canvas id="salesChart"></canvas>
+                </div>
+                <div class="feed">
+                    <h3>Daily Feed</h3>
+                    <ul>
+                        <li>
+                            <p><strong>Ashley Briggs</strong> started following <strong>Stacie Hall</strong></p>
+                            <p>5m ago</p>
+                        </li>
+                        <li>
+                            <p><strong>Chris Wood</strong> posted something on <strong>Stacie Hall's</strong> timeline</p>
+                            <p>30m ago</p>
+                        </li>
+                        <li>
+                            <p><strong>Stacie Hall</strong> posted a new blog</p>
+                            <p>Today 6:35 pm</p>
+                        </li>
+                    </ul>
+                    <button class="load-more">Load more</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

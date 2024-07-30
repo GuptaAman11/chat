@@ -1,0 +1,120 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #181818;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    padding: 20px;
+}
+
+h1 {
+    color: #ffffff;
+}
+
+.dashboard-cards {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #242424;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    position: relative;
+    color: #ffffff;
+}
+
+.welcome-card img {
+    width: 100px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.earnings-card .card-icon,
+.orders-card .card-icon,
+.revenue-card .card-icon {
+    font-size: 30px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.positive-change {
+    color: #4caf50;
+}
+
+.negative-change {
+    color: #f44336;
+}
+
+.dashboard-main {
+    display: flex;
+    gap: 20px;
+}
+
+.sales-revenue,
+.daily-feed {
+    background-color: #333333;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    color: #ffffff;
+}
+
+.chart {
+    background-color: #333333;
+    height: 300px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart img {
+    width: 100%;
+}
+
+.daily-feed .feed-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.daily-feed img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.feed-content {
+    flex: 1;
+}
+
+.feed-time {
+    color: #888888;
+}
+
+.feed-message {
+    color: #bbbbbb;
+    font-size: 0.9em;
+}
+
+.load-more {
+    background-color: #1e88e5;
+    border: none;
+    padding: 10px 20px;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.load-more:hover {
+    background-color: #1565c0;
+}
