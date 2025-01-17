@@ -1,19 +1,34 @@
-import React from 'react'
-import SearchPage from '../SearchPage/SearchPage'
-import './Home.css'
-import ChatPage2 from '../ChatPage/ChatPage2'
+import React from 'react';
+import SearchPage from '../SearchPage/SearchPage';
+import './Home.css';
+import ChatPage2 from '../ChatPage/ChatPage2';
+import { useResponsive } from '../context/responsiveContext';
 
 const Home = () => {
-  return (
-    <div className='w-full flex '>
-        <div flex='w-1/2'>
-            <SearchPage />
-        </div>
-        <div>
-            <ChatPage2 />
-        </div>
-    </div>
-  )
-}
+  const { isSmallScreen } = useResponsive();
 
-export default Home
+  return (
+    <>
+      {!isSmallScreen ? (
+        <div className="w-full flex h-screen">
+          {/* Search Page Section */}
+          <div className="w-3/12 border-r border-gray-300 h-full">
+            <SearchPage />
+          </div>
+          
+          {/* Chat Page Section */}
+          <div className="w-9/12 h-full">
+            <ChatPage2 />
+          </div>
+        </div>
+      ) : (
+        <div className="w-full h-screen">
+          {/* Only Search Page on Small Screen */}
+          <SearchPage />
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Home;

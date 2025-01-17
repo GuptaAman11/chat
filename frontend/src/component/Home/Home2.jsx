@@ -42,11 +42,7 @@ const Home2 = () => {
           ) : (
             <div className="w-full bg-pink-900">
               <ChatPage />
-              <button
-                className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
-              >
-                Back to Search
-              </button>
+             
             </div>
           )}
         </div>
