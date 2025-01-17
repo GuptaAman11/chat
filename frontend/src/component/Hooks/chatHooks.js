@@ -4,7 +4,7 @@ export function useGetLoggedInUser() {
     const getLoggedInUser = async() =>{
         try {
             const authToken = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8000/api/v1/users/logg', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/users/logg`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export function useAccessChat() {
     const accessChat = async(userId) =>{
         try {
             const authToken = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8000/api/v1/chat/access', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/chat/access`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export function useGetFetchChat() {
     const getFetchChat = async() =>{
         try {
             const authToken = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8000/api/v1/chat/fetch', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/chat/fetch`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ export function useCreateGroup() {
     const createGroup = async(userArray , chatName) =>{
         try {
             const authToken = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8000/api/v1/chat/group', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/chat/group`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

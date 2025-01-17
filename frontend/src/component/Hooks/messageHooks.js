@@ -6,7 +6,7 @@ export function useAddMessage() {
   const addMessage = async (message , chatId) => {
     try {
       const authToken = localStorage.getItem('token');
-      const response = await fetch('http://localhost:8000/api/v1/message/addmessage', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/message/addmessage`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -35,7 +35,7 @@ export function useFetchMsg() {
 
   const fetchMsg = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/message/allmessage/${chatId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/message/allmessage/${chatId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

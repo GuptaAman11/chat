@@ -7,21 +7,23 @@ const userRoutes = require('./routes/user');
 const chatRoute = require('./routes/chat');
 const messageRoute = require('./routes/message');
 const connectionRoute = require('./routes/connection');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
 
 // CORS configuration for both HTTP requests and WebSocket
 app.use(cors({
-  origin: 'http://localhost:3000', // Allow frontend origin
+  origin: ['http://localhost:3000', 'https://chatapp.guptaaman.tech'], // Allow frontend origin
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers
 }));
+app.use(express.static(path.join(__dirname, 'build')));
 
 // Set up Socket.IO with proper CORS handling
 const io = socketIo(server, {
   cors: {
-    origin: 'http://localhost:3000', // Allow frontend origin
+    origin: ['http://localhost:3000', 'https://chatapp.guptaaman.tech'], // Allow frontend origin
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
   },
@@ -55,6 +57,9 @@ app.use('/api/v1/message', messageRoute);
 app.use('/api/v1/chat', chatRoute);
 app.use('/api/v1/connect', connectionRoute);
 
+app.get('*', (req ,res)=>{
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+})
 // Start the server
 server.listen(8000, () => {
   console.log("Server started on port 8000");

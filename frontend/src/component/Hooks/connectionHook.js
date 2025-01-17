@@ -4,7 +4,7 @@ export function useConnectionHook() {
     const getConnections = async () => {
         try{
             const auth = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8000/api/v1/connect/abc', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/connect/abc`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${auth}`,
@@ -26,7 +26,7 @@ export function useNotificationHook() {
     const getNotifications = async () => {
         try{
             const auth = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8000/api/v1/connect/req', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/connect/req`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${auth}`,
@@ -47,7 +47,7 @@ export function useNotificationHook() {
     const sendConnectionRequest = async (id) => {
         try{
             const auth = localStorage.getItem('token');
-            await fetch('http://localhost:8000/api/v1/connect/connect', {
+            await fetch(`${process.env.REACT_APP_API_URL}/connect/connect`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${auth}`,
@@ -67,7 +67,7 @@ export function useStatusConncetionRequest() {
     const statusConnectionRequest = async (id , status) => {
         try{
             const auth = localStorage.getItem('token');
-            await fetch('http://localhost:8000/api/v1/connect/status', {
+            await fetch(`${process.env.REACT_APP_API_URL}/connect/status`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${auth}`,
@@ -89,7 +89,7 @@ export function useGetFriends() {
     const getFriends = async () => {
         try{
             const auth = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8000/api/v1/connect/friends', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/connect/friends`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${auth}`,

@@ -11,7 +11,7 @@ const Layout = () => {
 
     const findChatById = async(chatId) => {
         const authToken = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:8000/api/v1/chat/findsinglechat/${chatId}` , {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/chat/findsinglechat/${chatId}` , {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
