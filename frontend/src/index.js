@@ -4,12 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ChatProvider from './component/context/ChatProvider';
+import { RefreshProvider } from './component/context/Refresh';
+import { ModalProvider } from './component/context/ModalContext';
+import { SocketProvider } from './component/context/SocketContext';
+import { ResponsiveProvider } from './component/context/responsiveContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ChatProvider>
-        <App />
-  </ChatProvider>
+  <ResponsiveProvider>
+  <RefreshProvider>
+    <ModalProvider>
+      <ChatProvider>
+        <SocketProvider>
+          <App />
+        </SocketProvider>
+      </ChatProvider>
+    </ModalProvider>
+  </RefreshProvider>
+
+  </ResponsiveProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -53,7 +53,7 @@ const login = async (req, res) => {
         }
         const comparepassword = await bcrypt.compare(password, user.password)
         if (comparepassword) {
-            const token = jwt.sign({ user : user }, 'secret_key', { expiresIn: '1h' })
+            const token = jwt.sign({ user : user }, 'secret_key', { expiresIn: '4h' })
             return res.json({ mssg: "user logged in succesfully", user: user, token: token })
         }
 
@@ -75,7 +75,7 @@ const allUsers = async (req, res) => {
 
         const users = await User.find({
             ...keyword,
-            _id: { $ne: req.user.user._id } // Exclude the user with the given _id
+            // _id: { $ne: req.user.user._id } // Exclude the user with the given _id
         });
         res.status(200).json(users);
     } catch (error) {

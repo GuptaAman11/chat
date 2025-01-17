@@ -3,9 +3,10 @@ const User = require('../models/User')
 const Chat = require('../models/chat')
 const addMessage = async(req , res) => {
     const { content , chat} = req.body ;
+    console.log(chat, "this is chat id")
     if(!content){
         return res.json({msg : "Cant send the empty message"}) ;
-
+  
     }
     try {
        var message = await Message.create({

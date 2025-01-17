@@ -9,7 +9,7 @@ const messageSchema = mongoose.Schema(
     //chat fieid like id groupchat users array etc
     readBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
-  { timestamps: true }
+  { timestamps: true }   
 );
 
 const Message = mongoose.model("Message", messageSchema);

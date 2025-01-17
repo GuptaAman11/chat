@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 
 export function useAddMessage() {
-  const { chatId } = useParams();
-  const addMessage = async (message) => {
+  const addMessage = async (message , chatId) => {
     try {
       const authToken = localStorage.getItem('token');
       const response = await fetch('http://localhost:8000/api/v1/message/addmessage', {
@@ -33,7 +32,6 @@ export function useFetchMsg() {
   const [allMsg, setAllMsg] = useState([]);
   const { chatId } = useParams();
   const authToken = localStorage.getItem('token');
-  const socket = io('http://localhost:8000');
 
   const fetchMsg = async () => {
     try {
@@ -59,17 +57,7 @@ export function useFetchMsg() {
   useEffect(() => {
     if (chatId) {
       fetchMsg();
-      socket.emit('join room', chatId);
-
-      socket.on('message received', (newMessage) => {
-        setAllMsg((prevMessages) => [...prevMessages, newMessage]);
-      });
-
-      return () => {
-        socket.disconnect();
-      };
     }
   }, [chatId]);
-
   return { allMsg, setAllMsg };
 }

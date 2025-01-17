@@ -1,4 +1,4 @@
-const Router = require('express')
+ const Router = require('express')
 const router = Router();
 const { register, login, allUsers, getLoggedInUser } = require('../controllers/user');
 const { verifyJWT } = require('../middleware/verify');

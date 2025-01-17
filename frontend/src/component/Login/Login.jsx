@@ -26,16 +26,12 @@ const Login = () => {
          })
          const responseData = await response.json();
          if (response.ok) {
-            await setUser(responseData)
+            setUser(responseData)
             navigate('/home')
-
-             console.log('userlogged in sucessfully');
-            console.log(user)
              localStorage.setItem('token',responseData.token)
          }
          else {
-             console.log(responseData.msg)
-            console.log(responseData.msg)
+             alert(responseData.msg)
          }
       }
        

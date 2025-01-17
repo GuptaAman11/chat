@@ -6,62 +6,56 @@ const { Connection } = require('./db');
 const userRoutes = require('./routes/user');
 const chatRoute = require('./routes/chat');
 const messageRoute = require('./routes/message');
+const connectionRoute = require('./routes/connection');
 
 const app = express();
-
-
 const server = http.createServer(app);
+
+// CORS configuration for both HTTP requests and WebSocket
+app.use(cors({
+  origin: 'http://localhost:3000', // Allow frontend origin
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers
+}));
+
+// Set up Socket.IO with proper CORS handling
 const io = socketIo(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3000', // Allow frontend origin
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
-    credentials: true,
   },
 });
 
-app.use(express.json());
-app.use(cors());
+io.on("connection", (socket) => {
+  console.log("New client connected", socket.id);
 
-Connection();
-
-app.use('/api/v1/users', userRoutes);
-app.use('/api/v1/message', messageRoute);
-app.use('/api/v1/chat', chatRoute);
-
-io.on('connection', (socket) => {
-  console.log('New client connected');
-
-  socket.on('self-room', (userData) => {
-    socket.join(userData._id);
-    console.log(`User ${userData._id} joined room`);
-    socket.emit('connected');
-  });
-
-  socket.on('join-room', (chatId) => {
+  socket.on('join room', (chatId) => {
     socket.join(chatId);
-    console.log(`User joined chat room ${chatId}`);
+    console.log(`User joined room: ${chatId}`);
   });
 
-  socket.on('new-message', (newMessageReceived) => {
-    if (!newMessageReceived || !newMessageReceived.chat || !newMessageReceived.chat._id) {
-      return console.log('newMessageReceived.chat or chat._id is not found', newMessageReceived);
-    }
-    const chat = newMessageReceived.chat;
-    if (!chat.users) return console.log('chat.users not found');
+  socket.on('sendMessage', (message) => {
+    console.log(message);
 
-    chat.users.forEach(user => {
-      if (newMessageReceived.sender._id === user._id) return;
-
-      socket.in(user._id).emit('message-received', newMessageReceived);
-    });
-  });
-
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
+    io.to(message.chatId).emit('receivedMsg', message.message, message.sender);
+    console.log("message send sucessfully")
   });
 });
 
+// Middlewares
+app.use(express.json());
+
+// DB Connection
+Connection();
+
+// API Routes
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/message', messageRoute);
+app.use('/api/v1/chat', chatRoute);
+app.use('/api/v1/connect', connectionRoute);
+
+// Start the server
 server.listen(8000, () => {
   console.log("Server started on port 8000");
 });

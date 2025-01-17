@@ -5,8 +5,8 @@ import ChatPage2 from '../ChatPage/ChatPage2'
 
 const Home = () => {
   return (
-    <div className='home-main'>
-        <div>
+    <div className='w-full flex '>
+        <div flex='w-1/2'>
             <SearchPage />
         </div>
         <div>

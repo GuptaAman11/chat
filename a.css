@@ -1,0 +1,245 @@
+
+:root {
+  --font: "Mulish", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #fdf5f3 0%, #ecf3ff 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: var(--font);
+}
+.nearby-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 666px;
+  height: 368px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0px 24px 74px -20px rgba(130, 148, 173, 0.44);
+  border-radius: 10px;
+  margin: 5% 12%;
+  padding: 60px 50px;
+  transform: scale(0.95);
+  animation: show 0.8s ease;
+
+  .header {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    width: 100%;
+    height: fit-content;
+    color: #000;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 26px;
+    span {
+      font-size: 16px;
+      text-decoration: underline;
+      font-weight: 200;
+      color: #000;
+      a {
+        color: #000;
+      }
+    }
+  }
+  .user-card-wrap {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    width: 100%;
+    height: 210px;
+    margin-top: 33px;
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 135px;
+      height: 169px;
+      border: 1px solid #e5e5ee;
+      border-radius: 10px;
+
+      .photo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        p {
+          margin-top: 15px;
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 21px;
+        }
+      }
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        bottom: -20px;
+        background-color: #000;
+        border-radius: 50%;
+        color: #ffffff;
+        outline: none;
+        cursor: pointer;
+        border: none;
+        transition: all 0.7s ease;
+        span {
+          font-size: 35px;
+          font-weight: 200;
+        }
+      }
+      button:hover {
+        transform: scale(1.1) rotate(360deg);
+      }
+    }
+  }
+}
+
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 451px;
+  height: 653px;
+  background: #ffffff;
+  box-shadow: 0px 24px 74px -20px rgba(130, 148, 173, 0.44);
+  border-radius: 15px;
+  top: 18%;
+  right: 18%;
+  padding: 59px 50px;
+  transform: scale(0.75);
+  animation: show1 1.5s ease;
+
+  .header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 42%;
+    height: max-content;
+
+    span:nth-child(1) {
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 26px;
+      color: #000;
+    }
+    span:nth-child(2) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 47px;
+      height: 29px;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 26px;
+      color: #040405;
+      border: 1px solid #000;
+      border-radius: 25px;
+      margin-left: 10px;
+    }
+  }
+  .user-list {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin-top: 62px;
+
+    .user-row {
+      display: flex;
+      position: relative;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      .profile-photo {
+        width: 66px;
+        height: 66px;
+        cursor: pointer;
+      }
+      .person-info {
+        flex-grow: 1;
+        margin-left: 15px;
+
+        p:nth-child(1) {
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 21px;
+        }
+        p:nth-child(2) {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 16px;
+        }
+      }
+      .msg-icon {
+        width: 34px;
+        height: 34px;
+        cursor: pointer;
+      }
+    }
+    .user-row + .user-row {
+      margin-top: 42px;
+    }
+  }
+  .view {
+    position: relative;
+    width: 165px;
+    height: 120px;
+    top: 35px;
+    background: #000;
+    color: #ffffff;
+    border-radius: 60px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: all 0.4s ease;
+  }
+  .view:hover {
+    transform: scale(1.1);
+  }
+}
+@keyframes show {
+  0% {
+    opacity: 0;
+    margin-top: 100px;
+  }
+
+  100% {
+    opacity: 1;
+    margin-top: 85px;
+  }
+}
+@keyframes show1 {
+  0% {
+    opacity: 0;
+    margin-top: 15px;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 0px;
+  }
+}
+View Compiled
+
+
