@@ -8,13 +8,14 @@ const chatRoute = require('./routes/chat');
 const messageRoute = require('./routes/message');
 const connectionRoute = require('./routes/connection');
 const path = require('path');
+require("dotenv").config()
 
 const app = express();
 const server = http.createServer(app);
 
 // CORS configuration for both HTTP requests and WebSocket
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://chatapp.guptaaman.tech'], // Allow frontend origin
+  origin: ['http://localhost:3000', 'https://chatapp.guptaaman.tech' , 'http://localhost:3000'], // Allow frontend origin
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers
 }));
@@ -23,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 // Set up Socket.IO with proper CORS handling
 const io = socketIo(server, {
   cors: {
-    origin: ['http://localhost:3000', 'https://chatapp.guptaaman.tech'], // Allow frontend origin
+    origin: ['http://localhost:3000', 'https://chatapp.guptaaman.tech' , 'http://localhost:3000'], // Allow frontend origin
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
   },
@@ -52,6 +53,11 @@ app.use(express.json());
 Connection();
 
 // API Routes
+app.get("/ping", (req, res)=>{
+  // console.log("/ping hitted")
+  res.send("PONG");
+})
+
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/message', messageRoute);
 app.use('/api/v1/chat', chatRoute);

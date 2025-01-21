@@ -6,6 +6,11 @@ const userSchema = new mongoose.Schema({
         required: true,
 
     },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
     email: {
         type: String,
         required: true,
@@ -15,11 +20,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    
+   profileImage: {
+    type: String,
+   },
+
     createdAt: {
       type: Date,
       default: Date.now,
     },
+
 })
 
 const User = mongoose.model("User", userSchema);

@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 const SocketContext = createContext();
 
-const socket = io("http://localhost:8000" ,{
+const socket = io("" ,{
 }); 
 export const SocketProvider = ({ children }) => {
   useEffect(() => {
