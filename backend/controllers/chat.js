@@ -1,20 +1,19 @@
 const User = require('../models/User')
 const Chat = require('../models/chat')
 
-const accessChat = async (req, res) => {
-    const { userId } = req.body;
-  
+const accessChat = async (loggedInUser , userId, res) => {
     if (!userId) {
       return res.status(404).json({ msg: "User not found" });
     } 
-  
+    console.log("logged in user",loggedInUser)
+    console.log("user id",userId)
     try {
       const userName = await User.findById(userId)
 
       let isChat = await Chat.find({
         isGroupChat: false,
         $and: [
-          { users: { $elemMatch: { $eq: req.user.user._id } } },
+          { users: { $elemMatch: { $eq: loggedInUser } } },
           { users: { $elemMatch: { $eq: userId } } },
         ],
       }).populate("users", "-password").populate("latestMessage");
@@ -34,9 +33,9 @@ const accessChat = async (req, res) => {
         const chatData = {
           chatName: "sender",
           isGroupChat: false,
-          users: [req.user.user._id, userId],
+          users: [loggedInUser, userId],
         };
-  
+        console.log("excuted successfully")
         const createdChat = await Chat.create(chatData);
         const FullChat = await Chat.findOne({ _id: createdChat._id }).populate("users", "-password");
         return res.status(200).json(FullChat);

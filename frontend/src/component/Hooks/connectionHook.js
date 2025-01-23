@@ -4,7 +4,7 @@ export function useConnectionHook() {
     const getConnections = async () => {
         try{
             const auth = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/connect/abc`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/connect/unconnecteduser`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${auth}`,

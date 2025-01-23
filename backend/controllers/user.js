@@ -21,7 +21,7 @@ const uploadProfileImage = async (req) => {
       );
   
       
-      streamifier.createReadStream(req.file.buffer).pipe(stream);
+      streamifier.createReadStream(req.buffer).pipe(stream);
     });
   };
   
@@ -32,7 +32,6 @@ const register = async (req, res) => {
   const { email, name, password, username } = req.body;
   try {
 
-    
     
     if ((!email || !name || !password, !username)) {
       return res.status(400).json({ message: "All fields are required" });
@@ -49,10 +48,11 @@ const register = async (req, res) => {
     }
 
 
-    const profileImageLink = await uploadProfileImage(req);
+    const profileImageLink = await uploadProfileImage(req.file);
     if (!profileImageLink || profileImageLink === "") {
       return res.send("error at getting the link of image by cloudinary");
     }
+
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({

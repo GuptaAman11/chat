@@ -3,13 +3,13 @@ import './SearchPage.css';
 import Header from '../Header/Header';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAccessChat, useGetFetchChat } from '../Hooks/chatHooks';
 import { useResponsive } from '../context/responsiveContext';
 
 const SearchPage = () => {   
   const {connectedChat} = useGetFetchChat()
-  const {accessChat} = useAccessChat()
+  const {accessChat} = useAccessChat();
   const navigate = useNavigate()
   
   const handleClick = async(chatId) =>{
@@ -42,6 +42,9 @@ const SearchPage = () => {
           }
         </div>
        </div> 
+       <Link to={'/conn'} className='text-center p-4 bg-green-600 text-xl sans-serif text-white'>
+         <button className=''>Make A friend</button>
+        </Link>
     </div>
   );
 };

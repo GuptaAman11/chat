@@ -1,6 +1,6 @@
-// 
 const Connection = require('../models/connection');
 const User = require('../models/User');
+const {accessChat} = require('./chat');
 const sendConnection = async(req, res) => {
     const {targetId} = req.body;
     const user = req.user.user._id;
@@ -42,7 +42,7 @@ const connectionAccepted = async(req, res) => {
     const {connectionId, status} = req.body;
     const user = req.user.user._id;
     if(!user){
-        return res.status(401).json({message: "Unauthorized"});
+        return res.status(402).json({message: "Unauthorized"});
     }
     if(!connectionId){
         return res.status(400).json({message: "Connection ID is required"});
@@ -63,11 +63,12 @@ const connectionAccepted = async(req, res) => {
 
         const findConnection = await Connection.findOne({
             _id: connectionId
-        });
+        }).populate("requester", "name ")
+        .populate("target", "name");
         if(!findConnection){
             return res.status(400).json({message: "Connection request not found"});
         }
-        if(findConnection.target.toString() !== user){
+        if(findConnection.target._id.toString() !== user){
             return res.status(401).json({message: "Unauthorized"});
         }
         if(findConnection.status !== "pending"){
@@ -75,6 +76,10 @@ const connectionAccepted = async(req, res) => {
         }
         findConnection.status = status;
         await findConnection.save();
+        if(status === "accepted"){
+            await accessChat(user ,findConnection.requester._id , res);
+            return ;
+        }
 
         return res.status(200).json({message: "Connection request " + status});
 
@@ -92,7 +97,7 @@ const connectionAccepted = async(req, res) => {
             const pendingRequests = await Connection.find({
                 target: user,
                 status: "pending"
-            }).populate("requester", "name email")
+            }).populate("requester", "name email profileImage")
             .populate("target", "name email");
             return res.status(200).json({pendingRequests});
         }catch(error){
@@ -124,7 +129,7 @@ const connectionAccepted = async(req, res) => {
             // Step 3: Query for users not in the connectedUserIds
             const unconnectedUsers = await User.find({
                 _id: { $nin: Array.from(connectedUserIds) }
-            }).select('name email'); // Fetch only necessary fields
+            }).select('-password'); // Fetch only necessary fields
     
             res.status(200).json(unconnectedUsers);
         } catch (error) {

@@ -6,7 +6,7 @@ const {  connectionAccepted, findPendingRequest, sendConnection, findUnconnected
 router.post('/connect', verifyJWT ,sendConnection )
 router.post('/status', verifyJWT ,connectionAccepted )
 router.get('/req', verifyJWT ,findPendingRequest )
-router.get('/abc', verifyJWT ,findUnconnectedUsers )
+router.get('/unconnecteduser', verifyJWT ,findUnconnectedUsers )
 router.get('/friends', verifyJWT ,findDisplayUsers )
 
 

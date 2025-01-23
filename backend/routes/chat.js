@@ -5,7 +5,7 @@ const { verifyJWT } = require('../middleware/verify');
 
 
 
-router.post('/access', verifyJWT ,accessChat) ;
+// router.post('/access', verifyJWT ,accessChat) ;
 router.get('/fetch', verifyJWT ,fetchChat) ;
 router.post('/group', verifyJWT ,createGroupChat) ;
 router.post('/add', verifyJWT ,addToGroupChat) ;

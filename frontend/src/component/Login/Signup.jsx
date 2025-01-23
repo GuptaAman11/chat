@@ -1,46 +1,45 @@
 import React, { Component, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 
 const Signup = () => {
+  const navigate = useNavigate()
     const [registerFormData, setregisterFormData] = useState({
         registerEmail:"" , registerName : ""  , registerPassword : "" ,
         registerUsername : ""
      })
+     const [profileImage, setProfileImage] = useState("")
      const [showPassword, setShowPassword] = useState(true)
 
   
      const register = async()=> {
 
-        try {
-           const response = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
-               method: 'POST',
-               headers: {
-                   'Content-Type': 'application/json',
-               } , 
-               body: JSON.stringify({
-                 name: registerFormData.registerName,
-                 email: registerFormData.registerEmail,
-                 password: registerFormData.registerPassword,
-                  username: registerFormData.registerUsername,
-  
-             }),
-           });
-           const responseData = await response.json();
-           if (response.status===200) {
-               console.log("user created")
-               console.log(responseData)
-               
-           }
-           else {
-              console.log(response.error)
-           }
+      try {
+        // Create a FormData object to include text and file fields
+        const formData = new FormData();
+        formData.append('name', registerFormData.registerName);
+        formData.append('email', registerFormData.registerEmail);
+        formData.append('password', registerFormData.registerPassword);
+        formData.append('username', registerFormData.registerUsername);
+        formData.append('file', profileImage); // Assuming the image is in registerProfileImage
+      
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
+          method: 'POST',
+          body: formData, // Pass the FormData object directly
+        });
+      
+        const responseData = await response.json();
+      
+        if (response.ok) {
+          return {sucess : true , data : responseData} 
+        } else {
+          console.error('Error:', responseData.message || responseData.error);
         }
-        catch(error){
-           console.log(error)
-        }
-     }
+      } catch (error) {
+        console.error('Error:', error.message);
+      }
+    }      
   
      const handleInputChange = (e) => {
   
@@ -56,8 +55,10 @@ const Signup = () => {
       const handleOnSumbit =async(e)=>{
   
         e.preventDefault()
-        console.log(registerFormData)
-        // await register()
+        const result = await register()
+        if(result.sucess){
+          navigate('/')
+        }
         console.log(registerFormData)
       }
       return (
@@ -76,7 +77,7 @@ const Signup = () => {
               </p>
             </div>
     
-            <form className="space-y-6" onSubmit={handleOnSumbit}>
+            <form className="space-y-6" onSubmit={handleOnSumbit} encType="multipart/form-data">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
@@ -87,7 +88,7 @@ const Signup = () => {
                     name='registerName'
                     id="fullName"
                     type="text"
-                    required
+                    
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-[#6b21a8] focus:border-[#6b21a8]"
                   />
                 </div>
@@ -100,7 +101,7 @@ const Signup = () => {
                     name='registerUsername'
                     id="username"
                     type="text"
-                    required
+                    
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-[#6b21a8] focus:border-[#6b21a8]"
                   />
                 </div>
@@ -115,7 +116,7 @@ const Signup = () => {
                   name='registerEmail'
                   id="email"
                   type="text"
-                  required
+                  
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-[#6b21a8] focus:border-[#6b21a8]"
                 />
               </div>
@@ -130,7 +131,7 @@ const Signup = () => {
                     name='registerPassword'
                     id="password"
                     type={showPassword ? "password" : "text"}
-                    required
+                    
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-[#6b21a8] focus:border-[#6b21a8]"
                   />
                   <button
@@ -150,6 +151,19 @@ const Signup = () => {
                     )}
                   </button>
                 </div>
+                <div className="space-y-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Profile Image
+                </label>
+                <input
+                onChange={(e) => setProfileImage(e.target.files[0])}
+                  name='file'
+                  id="profileImage"
+                  type="file"
+                  
+                  className=" w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-[#6b21a8] focus:border-[#6b21a8]"
+                />
+              </div>
               </div>
     
               <div className="flex items-center space-x-2">
