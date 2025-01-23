@@ -24,10 +24,10 @@ const ChatPage = () => {
     } else {
       console.log('no chatId or socket');
     }
-    socket.on('receivedMsg', (message, sender) => {
+    socket.on('receivedMsg', (message, sender , name) => {
       setAllMsg((prevAllMsg) => [
         ...prevAllMsg,
-        { content: message, sender: { _id: sender } },
+        { content: message, sender: { _id: sender ,name : name } },
       ]);
     });
 
@@ -44,6 +44,7 @@ const ChatPage = () => {
         message: message,
         chatId: chatId,
         sender: user._id,
+        name : user.name
       });
       setMessage('');
     } else {

@@ -6,6 +6,9 @@ const Refresh = createContext();
 
 export const RefreshProvider = ({ children }) => {
   const [shouldUpdate, setShouldUpdate] = useState(false);
+  const [userName, setUserName] = useState("")
+  const [chatProfileImage, setChatProfileImage] = useState("")
+
 
 
   const triggerUpdate = () => {
@@ -14,7 +17,7 @@ export const RefreshProvider = ({ children }) => {
 
 
   return (
-    <Refresh.Provider value={{ triggerUpdate , shouldUpdate}}>
+    <Refresh.Provider value={{ triggerUpdate , shouldUpdate , userName , setUserName , setChatProfileImage , chatProfileImage }}>
       {children}
     </Refresh.Provider>
   );

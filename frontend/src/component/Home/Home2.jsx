@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SearchPage from '../SearchPage/SearchPage';
 import ChatPage from '../ChatPage/ChatPage';
 import { useModal } from '../context/ModalContext';
@@ -8,22 +8,6 @@ import { useResponsive } from '../context/responsiveContext';
 const Home2 = () => {
   const { isModalOpen } = useModal();
 
-  // const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
-  // const [showRightComponent, setShowRightComponent] = useState(false);
-
-  // // Update screen size on window resize
-  // React.useEffect(() => {
-  //   const handleResize = () => {
-  //     setIsSmallScreen(window.innerWidth < 768);
-  //     if (window.innerWidth >= 768) {
-  //       setShowRightComponent(true); // Show both components for larger screens
-  //     }
-  //   };
-
-  //   handleResize(); // Set initial value
-  //   window.addEventListener('resize', handleResize);
-  //   return () => window.removeEventListener('resize', handleResize);
-  // }, []);
   const {isSmallScreen , showRightComponent} = useResponsive();
 
   return (

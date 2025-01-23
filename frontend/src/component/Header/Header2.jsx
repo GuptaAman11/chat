@@ -3,11 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserGroup, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { useModal } from '../context/ModalContext';
+import { useSupplier } from '../context/Refresh';
 
 const Header = () => {
   const navigate = useNavigate();
   const {openModal} = useModal();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const {userName , chatProfileImage} = useSupplier()
+  console.log(userName)
 
   const toggleMenuVisibility = () => {
     setIsMenuVisible(!isMenuVisible);
@@ -18,10 +21,11 @@ const Header = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-5" onClick={openModal}>
           <img
-            src="https://via.placeholder.com/40"
+            src={chatProfileImage ? chatProfileImage : "https://via.placeholder.com/40"}
             alt="User Avatar"
             className="h-10 w-10 rounded-full"
           />
+          <span>{userName}</span>
           
         </div>
 
@@ -41,11 +45,11 @@ const Header = () => {
               <div className="absolute right-0 top-8 bg-white text-black shadow-lg rounded-md z-10">
                 <ul className="list-none">
                   <li className="p-2 hover:bg-gray-100">
-                    <a href="#" className="text-sm">
-                      Option one
-                    </a>
+                   <button>
+                    option one
+                   </button>
                   </li>
-                  <li className="p-2 hover:bg-gray-100">
+                  {/* <li className="p-2 hover:bg-gray-100">
                     <a href="#" className="text-sm">
                       Option two
                     </a>
@@ -54,7 +58,7 @@ const Header = () => {
                     <a href="#" className="text-sm">
                       Option three
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             )}

@@ -2,8 +2,9 @@ import React, { createContext, useContext, useEffect } from "react";
 import { io } from "socket.io-client";
 
 const SocketContext = createContext();
+// const backend_url = "http://localhost:8000";
 
-const socket = io("http://localhost:8000" ,{
+const socket = io("" ,{
 }); 
 export const SocketProvider = ({ children }) => {
   useEffect(() => {

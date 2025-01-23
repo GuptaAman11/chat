@@ -1,20 +1,21 @@
-import React, { useEffect , useState } from 'react';
+import React from 'react';
 import './SearchPage.css';
 import Header from '../Header/Header';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAccessChat, useGetFetchChat } from '../Hooks/chatHooks';
-import { useResponsive } from '../context/responsiveContext';
+import { useGetFetchChat } from '../Hooks/chatHooks';
+import { useSupplier } from '../context/Refresh';
 
-const SearchPage = () => {   
+const SearchPage = () => {
+  const {setUserName , setChatProfileImage} = useSupplier()   
   const {connectedChat} = useGetFetchChat()
-  const {accessChat} = useAccessChat();
   const navigate = useNavigate()
   
-  const handleClick = async(chatId) =>{
-  //  const abc = await accessChat(userId);
+  const handleClick = async(chatId , chatName , image) =>{
    navigate(`/chat/${chatId}`)
+   setUserName(chatName)
+   setChatProfileImage(image)
   }
   
   
@@ -32,8 +33,8 @@ const SearchPage = () => {
               {
                 connectedChat?.map(user => (
                   <div className='alluser-1'
-                  onClick={()=>{handleClick(user?._id)}} >
-                  <img src={url} alt="" key={user?.userId} />
+                  onClick={()=>{handleClick(user?._id , user?.chatName , user.chatProfileImage)}} >
+                  <img src={user.chatProfileImage ? user.chatProfileImage : url} alt="" key={user?.userId} />
                   <div className="alluser-name">{user?.chatName}</div>
                   </div >
                 ))
@@ -42,7 +43,7 @@ const SearchPage = () => {
           }
         </div>
        </div> 
-       <Link to={'/conn'} className='text-center p-4 bg-green-600 text-xl sans-serif text-white'>
+       <Link to={'/connection'} className='text-center p-4 bg-green-600 text-xl sans-serif text-white'>
          <button className=''>Make A friend</button>
         </Link>
     </div>

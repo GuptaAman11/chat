@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import io from 'socket.io-client';
 
 export function useAddMessage() {
   const addMessage = async (message , chatId) => {

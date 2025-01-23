@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
   socket.on('sendMessage', (message) => {
     console.log(message);
 
-    io.to(message.chatId).emit('receivedMsg', message.message, message.sender);
+    io.to(message.chatId).emit('receivedMsg', message.message, message.sender , message.name);
     console.log("message send sucessfully")
   });
 });

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 export function useGetLoggedInUser() {
     const [user , setUser] = useState("")
-    const getLoggedInUser = async() =>{
+const getLoggedInUser = async() =>{
         try {
             const authToken = localStorage.getItem('token');
             const response = await fetch(`${process.env.REACT_APP_API_URL}/users/logg`, {

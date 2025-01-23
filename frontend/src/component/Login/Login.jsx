@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import {Link, NavLink,useNavigate} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 
 
 const Login = () => {
-    const [user,setUser] = useState("");
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(true)
     const [loginData , setloginData] = useState({
@@ -27,7 +26,6 @@ const Login = () => {
          })
          const responseData = await response.json();
          if (response.ok) {
-            setUser(responseData)
             navigate('/home')
              localStorage.setItem('token',responseData.token)
          }

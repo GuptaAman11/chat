@@ -61,12 +61,13 @@ const accessChat = async (loggedInUser , userId, res) => {
         if (!singleChat.isGroupChat) {
           const otherUser = singleChat.users.find(user => user._id.toString() !== loggedInUserId.toString());
           if (otherUser) {
-            singleChat.chatName = otherUser.name; // Update the chatName to the other user's name
+        singleChat.chatName = otherUser.name; // Update the chatName to the other user's name
+        singleChat.chatProfileImage = otherUser.profileImage; // Add the other user to the chat object
           }
         }
         return singleChat;
       });
-  
+      
       return res.status(200).json(chat);
     } catch (error) {
       return res.status(400).json({ error: error.message });

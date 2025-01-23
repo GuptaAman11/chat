@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserGroup, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { faUserGroup, faEllipsisVertical, faBell } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { useGetLoggedInUser } from '../Hooks/chatHooks';
 
 const Header = () => {
+  const {user} = useGetLoggedInUser()
   const navigate = useNavigate();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
@@ -34,19 +36,25 @@ const Header = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-5">
           <img
-            src="https://via.placeholder.com/40"
+            src={user.profileImage ? user.profileImage : "https://via.placeholder.com/40"}
             alt="User Avatar"
             className="h-10 w-10 rounded-full"
           />
           
         </div>
-
+        
         <div className="flex items-center gap-10 pr-7 text-lg">
+          <FontAwesomeIcon
+            icon={faBell}
+            className="cursor-pointer"
+            onClick={() => navigate('/notification')}
+          />
           <FontAwesomeIcon
             icon={faUserGroup}
             className="cursor-pointer"
             onClick={() => navigate('/')}
           />
+
           <div className="relative" ref={menuRef}>
             <FontAwesomeIcon
               icon={faEllipsisVertical}
@@ -61,7 +69,7 @@ const Header = () => {
 >
                    modal page
                   </button>
-                  <li className="p-2 hover:bg-gray-100">
+                  {/* <li className="p-2 hover:bg-gray-100">
                     <a href="#" className="text-sm">
                       Option two
                     </a>
@@ -70,7 +78,7 @@ const Header = () => {
                     <a href="#" className="text-sm">
                       Option three
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             )}
