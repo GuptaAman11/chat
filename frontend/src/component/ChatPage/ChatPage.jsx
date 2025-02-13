@@ -1,41 +1,47 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState } from 'react';
 import Header2 from '../Header/Header2';
 import { useAddMessage, useFetchMsg } from '../Hooks/messageHooks';
 import { useGetLoggedInUser } from '../Hooks/chatHooks';
 import { useParams } from 'react-router-dom';
-import { useSocket } from '../context/SocketContext';
+import {  useSocket } from "../context/SocketContext";
+
 
 const ChatPage = () => {
-  const { chatId } = useParams();
-  const { user } = useGetLoggedInUser();
-  const { allMsg, setAllMsg } = useFetchMsg();
-  const { addMessage } = useAddMessage();
-  const [message, setMessage] = useState('');
-  const socket = useSocket();
-  const chatRef = useRef();
+    const { chatId } = useParams();
+    const { user } = useGetLoggedInUser();
+    const { allMsg, setAllMsg } = useFetchMsg();
+    const { addMessage } = useAddMessage();
+    const [message, setMessage] = useState("");
+    const { socket, userId } = useSocket();
+    const chatRef = useRef();
 
-  useEffect(() => {
-    chatRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [allMsg]);
+    // Scroll to bottom on new messages
+    useEffect(() => {
+        chatRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [allMsg]);
 
-  useEffect(() => {
-    if (chatId && socket) {
-      socket.emit('join room', chatId);
-    } else {
-      console.log('no chatId or socket');
-    }
-    socket.on('receivedMsg', (message, sender , name) => {
-      setAllMsg((prevAllMsg) => [
-        ...prevAllMsg,
-        { content: message, sender: { _id: sender ,name : name } },
-      ]);
-    });
+    // Join room and listen for new messages
+    useEffect(() => {
+        if (!socket || !chatId) return;
 
-    return () => {
-      socket.off('receivedMsg');
-    };
-  }, [chatId]);
+        console.log(`Joining room: ${chatId}`);
+        socket.emit("join room", chatId);
 
+        const handleReceivedMsg = (message, sender, name) => {
+            console.log("Received message:", message);
+            setAllMsg((prevAllMsg) => [
+                ...prevAllMsg,
+                { content: message, sender: { _id: sender, name: name } },
+            ]);
+        };
+
+        socket.on("receivedMsg", handleReceivedMsg);
+
+        return () => {
+            console.log("Leaving room:", chatId);
+            socket.off("receivedMsg", handleReceivedMsg); // Cleanup
+        };
+    }, [socket, chatId]); // ✅ Added `socket` dependency
   const handleOnSubmit = async (event) => {
     event.preventDefault();
     if (user) {

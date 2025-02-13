@@ -10,7 +10,6 @@ const Header = () => {
   const {openModal} = useModal();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const {userName , chatProfileImage} = useSupplier()
-  console.log(userName)
 
   const toggleMenuVisibility = () => {
     setIsMenuVisible(!isMenuVisible);

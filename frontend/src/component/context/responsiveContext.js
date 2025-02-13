@@ -30,7 +30,6 @@ export const ResponsiveProvider = ({ children, breakpoint = 768 }) => {
   );
 };
 
-// Custom Hook for consuming the context
 export const useResponsive = () => {
   return useContext(ResponsiveContext);
 };

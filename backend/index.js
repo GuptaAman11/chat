@@ -7,8 +7,9 @@ const userRoutes = require('./routes/user');
 const chatRoute = require('./routes/chat');
 const messageRoute = require('./routes/message');
 const connectionRoute = require('./routes/connection');
+const User = require('./models/User');
 const path = require('path');
-require("dotenv").config()
+require("dotenv").config();
 
 const app = express();
 const server = http.createServer(app);
@@ -35,14 +36,39 @@ io.on("connection", (socket) => {
 
   socket.on('join room', (chatId) => {
     socket.join(chatId);
-    console.log(`User joined room: ${chatId}`);
+  });
+
+  socket.on("set_user" , async(userId) => {
+    try {
+      socket.userId = userId;
+      if (!userId) return; // Prevent errors if userId is undefined
+
+      await User.findByIdAndUpdate(userId, {
+        $set: { isOnline: true }
+      });
+      const user = await User.findById(userId);
+      console.log(user.isOnline);
+    
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   socket.on('sendMessage', (message) => {
-    console.log(message);
-
     io.to(message.chatId).emit('receivedMsg', message.message, message.sender , message.name);
-    console.log("message send sucessfully")
+  });
+
+  socket.on("disconnect", async () => {
+    console.log("disconnected");
+    if (!socket.userId) return; // Prevent errors if userId is undefined
+    try{
+      await User.findByIdAndUpdate(socket.userId, {
+        $set: { isOnline: false }
+      });
+    }catch(error){
+      console.log(error);
+      
+    }
   });
 });
 
@@ -51,12 +77,6 @@ app.use(express.json());
 
 // DB Connection
 Connection();
-
-// API Routes
-app.get("/ping", (req, res)=>{
-  // console.log("/ping hitted")
-  res.send("PONG");
-})
 
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/message', messageRoute);
